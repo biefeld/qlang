@@ -1,0 +1,42 @@
+<program> ::= <statement>*
+<statement> ::= (<assignment> | <function_decl> | <circuit_decl> | <oracle_decl> | <method>)
+
+
+(* currently circuit.measure(), circuit.printCircuit(), or circuit.distribution() *)
+<method> ::= IDENTIFIER "." IDENTIFIER "()" ";"
+
+
+<assignment> ::= "bits" IDENTIFIER "=" BITSTRING ";"
+
+
+<function_decl> ::= "function" IDENTIFIER "(" <decl_args> ")" "->" <type> "{" <expr> "}"
+<type> ::= "bits" "[" NUMBER "]"
+<decl_args> ::= <param> ("," <param>)* | ""
+<param> ::= IDENTIFIER ":" <type>
+
+
+<oracle_decl> ::= "oracle" IDENTIFIER <signature> "{" <qtuple_expr> "}"
+<signature> ::= "(" <qubit_args> ")" "->" <qtuple_type>
+<qubit_args> ::= IDENTIFIER ":" <qparam> ("," IDENTIFIER ":" <qparam>)*
+<qparam> ::= "qubits" "[" NUMBER "]"
+<qtuple_type> ::= "(" <qparam> ("," <qparam>)* ")"
+<qtuple_expr> ::= "(" <expr> ("," <expr>)* ")"
+
+
+<circuit_decl> ::= "circuit" IDENTIFIER "{" <register_block> <apply_block> "}"
+<register_block> ::= "register:" (<qubit_assignment>)+
+<qubit_assignment> ::= "qubits" IDENTIFIER "=" QUBITSTRING ";"
+<apply_block> ::= "apply:" (<circuit_instruction>)+
+<circuit_instruction> ::= IDENTIFIER "(" <circuit_ref> ("," <circuit_ref>)* ");"
+<circuit_ref> ::= IDENTIFIER "[" (NUMBER | "_") "]"
+
+
+<expr> ::= <or_expr>
+<or_expr> ::= <xor_expr> ("|" <xor_expr>)*
+<xor_expr> ::= <and_expr> ("^" <and_expr>)*
+<and_expr> ::= <postfix_expr> ("&" <postfix_expr>)*
+<postfix_expr> ::= <primary> <postfix>*
+<postfix> ::= <function_call>
+<primary> ::= IDENTIFIER | bitstring | "(" <expr> ")"
+<function_call> ::= "(" <call_args>? ")"
+<call_args> ::= <expr> ("," <expr>)*
