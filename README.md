@@ -86,7 +86,7 @@ The current release is functional, but still experimental, and several improveme
 
 Architectural improvements include:
 - Refactoring evaluation architecture → the language's evaluation of expressions and circuits could be cleaner, and require a more modular separation of concerns.
-- Strengthening the type system → Certain expression evaluations allow for weaker typing to occur.
+- Strengthening the type system with static type checking
 - Improving Runtime Error messaging
 - Implementing an automated and extensible testing suite (that is compatible with `cargo test`)
 - Updating unitary oracles → oracles are currently constrained, in that they must be applied to an entire `QubitRegister`'s domain.
