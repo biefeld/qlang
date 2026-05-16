@@ -1,4 +1,3 @@
-#[allow(dead_code)] // Expr is essential to making everything work...
 #[derive(Debug, Clone)]
 pub enum Statement {
     Assignment(Assignment), // reserved for bits allocation

@@ -150,7 +150,11 @@ impl Evaluator {
             let result = temp_evaluator.eval_expr(&expr_owned, Some(&args), Some(&table_owned));
             match result {
                 Ok(EvaluatorType::Bits(b)) => Ok(b.literal),
-                _ => Err(RegisterError::RunTimeFailure)
+                Err(e) => {
+                    let msg: Option<String> = Some(e.to_string());
+                    Err(RegisterError::RunTimeFailure(msg))
+                },
+                _ => Err(RegisterError::RunTimeFailure(None))
             }
         })
     }

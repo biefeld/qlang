@@ -46,4 +46,17 @@ impl Gate {
             Gate::Measure(tgts_count) => *tgts_count 
         }
     }
+
+    pub fn arity_from_string(
+        gate_name: &String,
+        m_arity: usize
+    ) -> Option<usize> {
+        match gate_name.as_str() {
+            "H" | "X" | "Y" | "Z" | "S" | "T" => Some(1),
+            "CNOT" | "SWAP" | "CZ" => Some(2),
+            "CCNOT" | "CSWAP" => Some(3),
+            "measure" => Some(m_arity),
+            _ => None
+        }
+    }
 }

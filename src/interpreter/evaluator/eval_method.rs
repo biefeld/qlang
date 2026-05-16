@@ -36,7 +36,10 @@ impl Evaluator {
 
             "printCircuit" => todo!(),
 
-            _ => { return Err(RuntimeError::MethodUndefined(call.call.clone())); }
+            _ => {
+                let name: String = call.call.to_string();
+                return Err(RuntimeError::MethodUndefined(name));
+            }
         }
 
         return  Ok(());

@@ -1,9 +1,11 @@
 mod lexer;
 mod parser;
+mod type_checker;
 mod evaluator;
 
 use crate::interpreter::lexer::Lexer;
 use crate::interpreter::parser::Parser;
+use crate::interpreter::type_checker::TypeChecker;
 use crate::interpreter::evaluator::Evaluator;
 
 pub struct Interpreter { }
@@ -20,6 +22,12 @@ impl Interpreter {
         let result = parser.parse();
         if let Err(e) = result { panic!("Parsing Error: {}", e); }
         let result = result.unwrap();
+
+        let mut tc: TypeChecker = TypeChecker::new();
+        match tc.ensures(&result) {
+            Ok(_) => { }, //static check passed, safe to evaluate
+            Err(e) => { panic!("Typing Error: {}", e); }
+        }
 
         let mut evaluator: Evaluator = Evaluator::new(result);
         let result = evaluator.eval();

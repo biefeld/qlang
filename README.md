@@ -25,6 +25,7 @@ Although the project is yet to be fully realised, the current implementation is 
 `qlang` is composed of:
 - a lexer for tokenisation,
 - a recursive-descent parser for AST construction,
+- a static type-checker for ensuring programming correctness,
 - an evaluator/runtime for semantic execution,
 - and a quantum register engine for state evolution and measurement.
 
@@ -57,11 +58,11 @@ circuit bernstein_vazirani {
 
 bernstein_vazirani.measure(shots=3);
 
-# PRINTS TO STDOUT:
-Measuring circuit 'bernstein_vazirani' 3 time/s.
-SHOT 1 OF 3: Got measurement [0, 1, 1, 0]
-SHOT 2 OF 3: Got measurement [0, 1, 1, 0]
-SHOT 3 OF 3: Got measurement [0, 1, 1, 0] #
+# PRINTS TO STDOUT: #
+# Measuring circuit 'bernstein_vazirani' 3 time/s. #
+# SHOT 1 OF 3: Got measurement [0, 1, 1, 0]        #
+# SHOT 2 OF 3: Got measurement [0, 1, 1, 0]        #
+# SHOT 3 OF 3: Got measurement [0, 1, 1, 0]        #
 ```
 
 ## Usage:
@@ -77,7 +78,7 @@ cargo run [file]
 
 Or otherwise:
 ```
-./path_to_binary/qlang.exe [file]
+./path_to_file/qlang.exe [file]
 ```
 
 
@@ -85,9 +86,10 @@ Or otherwise:
 The current release is functional, but still experimental, and several improvements and features have been planned before the language can be considered stable.
 
 Architectural improvements include:
-- Refactoring evaluation architecture → the language's evaluation of expressions and circuits could be cleaner, and require a more modular separation of concerns.
-- Strengthening the type system with static type checking
-- Improving Runtime Error messaging
+- Refactoring evaluation architecture:
+  - The language's evaluation of expressions and circuits can be tightened, and require a more modular separation of concerns.
+  - With the introduction of static type checking, the evaluator can be adjusted to focus on a more narrow concern.
+- Improving Error messaging.
 - Implementing an automated and extensible testing suite (that is compatible with `cargo test`)
 - Updating unitary oracles → oracles are currently constrained, in that they must be applied to an entire `QubitRegister`'s domain.
 

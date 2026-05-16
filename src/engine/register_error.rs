@@ -9,7 +9,7 @@ pub enum RegisterError {
     OutOfRange(usize, usize),
     CompositionFailed(String),
     BlackBoxMisalign,
-    RunTimeFailure
+    RunTimeFailure(Option<String>)
 }
 
 impl fmt::Display for RegisterError {
@@ -37,8 +37,11 @@ impl fmt::Display for RegisterError {
                 write!(f, "Black Box Misaligned with provided inputs")
             }
 
-            Self::RunTimeFailure => {
-                write!(f, "Unexpected failure at runtime")
+            Self::RunTimeFailure(s) => {
+                match s {
+                    Some(s) => { write!(f, "Unexpected failure at runtime: {}", s) },
+                    None => {  write!(f, "Unexpected failure at runtime") }
+                }
             }
         }
     }
