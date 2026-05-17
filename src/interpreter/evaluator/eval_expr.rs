@@ -82,7 +82,7 @@ impl Evaluator {
                     ast::Expr::Identifier(f) => f.clone(),
                     _ => { return Err(RuntimeError::TypeMismatch); }
                 };
-                let func: Function = match self.environment.working_env.get(&func_name) {
+                let func: Function = match self.environment.resolve(&func_name) {
                     Some(EvaluatorType::Function(func)) => func.clone(),
                     _ => { return Err(RuntimeError::TypeMismatch); }
                 };
