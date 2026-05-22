@@ -82,7 +82,7 @@ impl Operator {
             Gate::Swap => todo!(),
             Gate::CZ => operator_helpers::apply_cz(&mut state.state, n, &self.targets),
             // ternary operators
-            Gate::Toffoli => todo!(),
+            Gate::Toffoli => operator_helpers::apply_toffoli(&mut state.state, n, &self.targets),
             Gate::CSwap => todo!(),
             // custom operations
             Gate::BlackBox(bb) => operator_helpers::apply_u_f(&mut state.state, n, bb)?,
